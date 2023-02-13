@@ -5,7 +5,7 @@ This program calculates the likelihood that two stars are a line-of-sight binary
 ## Methodology
 Observed binary systems that are located further away from other stars are morea likely to be gravitationally bound as opposed to light-of-sight systems. Conversely, binary systems that are found in dense clusters are more likely to be line-of-sight systems as opposed to gravitationally bound. To estimate the likelihood that a binary system is gravitationally bound, the program takes the following steps:
 1) Identify a binary system (red supergiant + OB star).
-![Step1](images/Step1.jpg)
+![Step1](https://github.com/KNeugent/LineOfSightBinaries/blob/main/images/step1.jpg)
 2) Draw a circle around the binary system.
 ![Step2](images/Step2.jpg)
 3) Identify the population of secondary stars (OB stars) within the circle.
