@@ -15,12 +15,19 @@ When determining whether two stars that are spatially close to one another in th
 This answer will be different for the system in the field shown above (a relatively uncrowded region) compared to the field shown below (a crowded region), which is why a knowledge of the stellar population is necessary.
 ![Step4](https://github.com/KNeugent/LineOfSightBinaries/blob/main/images/step4.jpg)
 
-## Inputs
-The following information is needed:
-- Coordinates for the list of binary systems (in the example, for the red supergiant + OB stars)
-- Coordinates for a reasonably complete population of the secondary star within the local environment (in the example, for the OB stars in each galaxy)
+## Using this code
 
-## Example application: Red Supergiant + OB binaries
+### Dependencies
+
+The only imported package is numpy. This code was built using python3.
+
+### Running the code
+
+The only values that need to be changed are located in the main method. Here you can change the number of Monte Carlo simulations that will be performed, the distance (in arcseconds) between objects when used to determine if two objects are in a light-of-sight pairing, the distance (in arcminutes) away from the object to define as the "local environment," as well as read in the list of unknown binaries and secondary stars. Example csv files are provided as well. M31binaries.csv is the list of unknown binaries and M31OBs.csv is the list of secondary stars.
+
+The code can then be run using `python lineOfSight.py`
+
+### A test case: Red Supergiant + OB binaries
 The example below walks us through the process of applying the Monte Carlo simulation to red supergiant + OB binaries in a few Local Group galaxies.
 
 ### Red Supergiant + OB binaries
