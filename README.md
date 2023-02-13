@@ -38,7 +38,7 @@ The code can then be run using `python lineOfSight.py`
 
 The program outputs `losResults.csv` that shows the percentage of times each object was close enough to a secondary object such that it would be classified as a line-of-sight binary. 
 
-### A test case: Red Supergiant + OB binaries
+## A test case: Red Supergiant + OB binaries
 The example below walks us through the process of applying the Monte Carlo simulation to red supergiant + OB binaries in a few Local Group galaxies.
 
 ### Red Supergiant + OB binaries

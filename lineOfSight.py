@@ -1,48 +1,92 @@
 import numpy as np
 
-# purpose: calculate the coordinate range around the binary to determine local population density of secondary stars
-# inputs coordinates of a binary and distance (in arcminutes)
-# outputs an array of [minRA, maxRA, minDec, maxDec] in decimal degrees
 def calcCoordRange(binRA, binDec, dist):
+    '''
+    Calculates the maximum and minimum RA and Dec values around an object
+    given a distance.
+
+         Parameters:
+              binRA (int): RA of binary in decimal degrees
+              binDec (int): Declination of binary in decimal degrees
+              dist (int): distance from binary in arcminutes
+        
+         Returns:
+              coordRange ([int,int,int,int]): minimum RA, maximum RA, minimum Dec, 
+                                              maximum Dec in decimal degrees
+    '''
     # convert arcminutes to decimal degrees
     distDeg = dist/60.
+    
     # calcualte min and max RA and Dec values
     minRA = binRA - (distDeg) * np.cos(np.radians(binDec))
     maxRA = binRA + (distDeg) * np.cos(np.radians(binDec))
     decA = binDec - distDeg
     decB = binDec + distDeg
-    # confusing because sometimes Dec is negative ...
+    
+    # necessary because sometimes the Dec is negative
     if decA < decB:
         minDec = decA
         maxDec = decB
     else:
         minDec = decB
         maxDec = decA
-    return [minRA,maxRA,minDec,maxDec]
+        
+    coordRange = [minRA,maxRA,minDec,maxDec]
+    return coordRange
 
-# purpose: selects secondary stars within coordinate range
-# inputs an array of min/max RA and Dec values
-# outputs an array of the coordiantes (in decimal degrees) of all of the secondary stars within the region
 def selectSecondaries(secondaries, coordRange):
+    '''
+    Returns the subset of secondaries that are within the given coordinate range
+
+         Parameters:
+              secondaries ([int,int]): coordinates of secondaries [RA, Dec] in decimal degrees
+              coordRange ([int,int,int,int]): minimum RA, maximum RA, minimum Dec, 
+                                              maximum Dec in decimal degrees
+
+         Returns:
+              selectedSecondaries ([int,int]): coordinates of secondaries [RA, Dec] in decimal degrees
+
+    '''
     selectedSecondaries = secondaries[(secondaries[:,0] > coordRange[0]) &
                                       (secondaries[:,0] < coordRange[1]) &
                                       (secondaries[:,1] > coordRange[2]) &
                                       (secondaries[:,1] < coordRange[3])]
     return selectedSecondaries
 
-# purpose: calculates the distance between an object and list of objects
-# inputs coordiantes (decimal degrees) of fake star and list of real secondaries
-# outputs the distance in degrees (as an array)
-# assumption: given the small distances, this does not use spherical trig
-def calcDist(starA,starB):
-    RAarr = np.ones(len(starB))*starA[0]
-    Decarr = np.ones(len(starB))*starA[1]
-    return np.sqrt(((RAarr-starB[:,0])*np.cos(np.radians(starA[1])))**2.+(Decarr-starB[:,1])**2.)
+def calcDist(starA,stars):
+    '''
+    Calculates the distance between a single object and a list of objects
 
-# purpose: determines the percentage of line-of-sight stars
-# inputs coordinate range, array of secondaries in the region, number of runs, distance for LOS
-# outputs the percentage of the populated stars that will have LOS companions
+         Parameters:
+              starA (int,int): RA and Dec in decimal degrees
+              stars ([int,int]): array of RA and Dec in decimal degrees
+
+         Returns:
+              distVals ([int]): distances in decimal degrees
+    '''
+    RAarr = np.ones(len(stars))*starA[0]
+    Decarr = np.ones(len(stars))*starA[1]
+    # assumption: given the small distances, this does not use spherical trig
+    distVals = np.sqrt(((RAarr-stars[:,0])*np.cos(np.radians(starA[1])))**2.+(Decarr-stars[:,1])**2.)
+    
+    return distVals
+
 def calcLOS (coordRange, secondaries, nRuns, distLOS):
+    '''
+    Determines the percentage chance that a star is a line-of-sight binary
+    
+         Parameters:
+              coordRange ([int,int,int,int]): minimum RA, maximum RA, minimum Dec, 
+                                              maximum Dec in decimal degrees
+              secondaries ([int,int]): coordinates of secondaries [RA, Dec] in decimal degrees
+              nRuns (int): number of Monte Carlo simulations
+              distLOS (int): separation between two objects (in arcminutes) 
+                             necessary to be a line-of-sight companion
+
+         Returns:
+              losPercent (int): percent of runs that had a line-of-sight companion
+    '''
+
     # counter that increments if there is a line-of-sight binary
     los = 0
 
@@ -62,17 +106,24 @@ def calcLOS (coordRange, secondaries, nRuns, distLOS):
                 los = los + 1
                 
     # return the percentage of line-of-sight binaries
-    return los*1.0/nRuns
-
-# purpose: determines the overall line-of-sight percentage
-# inputs:
-#  - nRuns: number of runs for MC
-#  - distLOS: distance between objects needed for "line-of-sight" classification (arcseconds)
-#  - distSurvey: distance around object for population density (arcminutes)
-#  - unknownBinaries: list of objects as a numpy array with the first colum as RA, second as Dec (decimal degree)
-#  - secondaries: list of objects as a numpy array with the first colum as RA, second as Dec (decimal degree)
+    losPercent = los*1.0/nRuns
+    return losPercent
 
 def calcLOSpercent(nRuns, distLOS, distSurvey, unknownBinaries, secondaries):
+    '''
+    Determines the line-of-sight percentage for each star
+    
+         Parameters:
+              nRuns (int): number of Monte Carlo simulations
+              distLOS (int): separation between two objects (in arcminutes) 
+                             necessary to be a line-of-sight companion
+              distSurvey (int): distance around object for population density in arcminutes
+              unknownBinaries ([int,int]): coordinates of unknown binaries [RA, Dec] in decimal degrees
+              secondaries ([int,int]): coordinates of secondaries [RA, Dec] in decimal degrees
+
+         Returns:
+              losResults ([int]): one value for each star
+    '''
     # create empty array of percentage of LOS results
     losResults = np.zeros(len(unknownBinaries))
 
@@ -87,16 +138,21 @@ def calcLOSpercent(nRuns, distLOS, distSurvey, unknownBinaries, secondaries):
         # save in array to be returned at the end
         losResults[i] = losCalc
 
-    np.savetxt("losResults.csv",losResults,delimiter=",")
     return losResults
 
 def main():
+    # Note: these have been pre-populated with test values
+    # Please edit these to suit your needs
     nRuns = 10000
     distLOS = 0.75 # arcseconds
     distSurvey = 5 # arcminutes
+
     unknownBinaries = np.loadtxt("M31binaries.csv",delimiter=",")
     secondaries = np.loadtxt("M31OBs.csv",delimiter=",")
+
     losResults = calcLOSpercent(nRuns, distLOS, distSurvey, unknownBinaries, secondaries)
+
+    np.savetxt("losResults.csv",losResults,delimiter=",")
     
 if __name__ == "__main__":
     main()
