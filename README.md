@@ -7,13 +7,13 @@ Observed binary systems that are located further away from other stars are morea
 1) Identify a binary system (red supergiant + OB star).
 ![Step1](https://github.com/KNeugent/LineOfSightBinaries/blob/main/images/step1.jpg)
 2) Draw a circle around the binary system.
-![Step2](images/Step2.jpg)
+![Step2](https://github.com/KNeugent/LineOfSightBinaries/blob/main/images/step2.jpg)
 3) Identify the population of secondary stars (OB stars) within the circle.
-![Step3](images/Step3.jpg)
+![Step3](https://github.com/KNeugent/LineOfSightBinaries/blob/main/images/step3.jpg)
 4) Randomly place the binary system at different places within the circle and determine the number of times it would be within a certain distance of the secondary stars and thus a line-of-sight binary.
 
 This answer will be different for the system in the field shown above compared to the field shown below, which is why a knowledge of the stellar population is necessary.
-![Step4](images/Step4.jpg)
+![Step4](https://github.com/KNeugent/LineOfSightBinaries/blob/main/images/step4.jpg)
 
 ## Inputs
 The following information is needed:
