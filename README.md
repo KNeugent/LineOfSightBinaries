@@ -1,6 +1,6 @@
 # Line of Sight Objects
 
-This program calculates the likelihood that two stars are a line-of-sight binary system as opposed to a gravitationally bound system using a Monte Carlo simulation and knowledge of the local environment's stellar density. This example is applied to a set of red supergiant + OB binary systems in the galaxies M31, M33, and the Magellanic Clouds but can be applied to any two astronomical objects in an environment.
+This program calculates the percentage chance that two stars are a line-of-sight binary system as opposed to a gravitationally bound system using a Monte Carlo simulation and knowledge of the local environment's stellar density. This example is applied to a set of red supergiant + OB binary systems in the galaxies M31, M33, and the Magellanic Clouds but can be applied to any two astronomical objects in an environment.
 
 ## Methodology
 When determining whether two stars that are spatially close to one another in the sky are gravitationally bound as opposed to line-of-sight systems, it is important to look at the surrounding stellar environment. If there are relatively few other stars in the region that could be line-of-sight companions, it is more likely that the binary system is gravitationally bound. To make this determination, the program does the following:
@@ -54,4 +54,20 @@ number OBs in SMC = 1455267
 
 So, clearly there shouldn't be more OBs in the MCs than in M31 or M33, but this shows the limitations of our photometry. It is more difficult to resolve individual stars in M31 and M33 because they're further away. But, this will still give a pretty good idea of the locations of the OB stars within the galaxies.
 
-### Determining the likelihood of line-of-sight binaries
+### Determining the percentage chance of line-of-sight binaries
+
+As an example. I've included the M31binaries.csv and M31OBs.csv files that include the coordinates of the M31 red supergiant + OB binaries and known OB stars in M31, respectively (in decimal degree csv format). Running the lineOfSight.py script with the following inputs outputs the losResults.csv file.
+
+Inputs:
+
+nRuns = 10000
+
+distLOS = 0.75 # arcseconds
+
+distSurvey = 5 # arcminutes
+
+unknownBinaries = M31binaries.csv
+
+secondaries = M31OBs.csv
+
+The output is then losResults.csv which shoes the percentage of times each M31 red supergiant + OB binary was close enough to another OB star to be deemed a line-of-sight binary. On this run of the simulation, the highest percentage was 1.2%. So, it is very unlikely that any of these objects are line-of-sight binaries!
