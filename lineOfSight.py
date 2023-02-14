@@ -17,7 +17,8 @@ def calcCoordRange(binRA, binDec, dist):
     # convert arcminutes to decimal degrees
     distDeg = dist/60.
     
-    # calcualte min and max RA and Dec values
+    # calculate min and max RA and Dec values
+    # convert to radians to use numpy cos
     minRA = binRA - (distDeg) * np.cos(np.radians(binDec))
     maxRA = binRA + (distDeg) * np.cos(np.radians(binDec))
     decA = binDec - distDeg
@@ -106,6 +107,7 @@ def calcLOS (coordRange, secondaries, nRuns, distLOS):
                 los = los + 1
                 
     # return the percentage of line-of-sight binaries
+    # multiply by 1.0 to convert to float
     losPercent = los*1.0/nRuns
     return losPercent
 
