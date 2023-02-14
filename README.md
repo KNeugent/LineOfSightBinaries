@@ -19,7 +19,9 @@ This answer will be different for the system in the field shown above (a relativ
 
 ### Dependencies
 
-The only imported package is numpy. This code has been tested using python3.
+The only imported package is numpy.
+
+This code has been tested using python 3.7.3 and numpy 1.18.2.
 
 ### Running the code
 
@@ -32,7 +34,7 @@ The only values that need to be changed are located in the main method. Here you
 
 Example csv files are provided as well. `M31binaries.csv` is the list of unknown binaries and `M31OBs.csv` is the list of secondary stars.
 
-The code can then be run using `python lineOfSight.py`
+The code can then be run using `python3 lineOfSight.py`
 
 ### Outputted files
 
@@ -45,9 +47,9 @@ The list of red supergiant binary systems comes from [Neugent (2021)](https://ui
 
 To select the OB stars from the Local Group Galaxy Survey, we can remove everything redder than an A0V using a (B-V) cutoff of (B-V) < 0.0. However, we must also consider interstellar reddening. From Massey et al. (2007) we get the reddening values E(B-V). The first number is the average reddening and the number in parenthesis is the range. For this project, we'll use the average. For M31, this is: 0.13 (0.06-0.25)
 
-We'd also like to set a brightness criteria. Based on our observing set-up, we won't detect any OB stars fainter than V = 21. Using these cuts, we find 26762 OB stars in M31.
+We'd also like to set a brightness criteria. Based on our observing setup, we won't detect any OB stars fainter than V = 21. Using these cuts, we find `26,762` OB stars in M31.
 
-I've included the M31binaries.csv and M31OBs.csv files that include the coordinates of the M31 red supergiant + OB binaries and known OB stars in M31, respectively (in decimal degree csv format). Running the lineOfSight.py script with the following inputs outputs the losResults.csv file.
+I've included the M31binaries.csv and M31OBs.csv files that contain the coordinates of the M31 red supergiant + OB binaries and known OB stars in M31, respectively (in decimal degree csv format). Running the lineOfSight.py script with the following inputs outputs the losResults.csv file.
 
 Inputs:
 * nRuns = 10000
