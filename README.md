@@ -19,9 +19,9 @@ This answer will be different for the system in the field shown above (a relativ
 
 ### Dependencies
 
-The only imported package is numpy.
+The only imported package is `numpy`.
 
-This code has been tested using python 3.7.3 and numpy 1.18.2.
+This code has been tested using `python 3.7.3` and `numpy 1.18.2`.
 
 ### Running the code
 
