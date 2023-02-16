@@ -7,13 +7,13 @@ def calcCoordRange(binRA, binDec, dist):
     given a distance.
 
          Parameters:
-              binRA (int): RA of binary in decimal degrees
-              binDec (int): Declination of binary in decimal degrees
-              dist (int): distance from binary in arcminutes
+              binRA (float): RA of binary in decimal degrees
+              binDec (float): Declination of binary in decimal degrees
+              dist (float): distance from binary in arcminutes
 
          Returns:
-              coordRange ([int,int,int,int]): minimum RA, maximum RA, minimum Dec,
-                                              maximum Dec in decimal degrees
+              coordRange ([float,float,float,float]): minimum RA, maximum RA, minimum Dec,
+                                                      maximum Dec in decimal degrees
     """
     # convert arcminutes to decimal degrees
     distDeg = dist / 60.0
@@ -42,12 +42,12 @@ def selectSecondaries(secondaries, coordRange):
     Returns the subset of secondaries that are within the given coordinate range
 
          Parameters:
-              secondaries ([int,int]): coordinates of secondaries [RA, Dec] in decimal degrees
-              coordRange ([int,int,int,int]): minimum RA, maximum RA, minimum Dec,
-                                              maximum Dec in decimal degrees
+              secondaries ([float,float]): coordinates of secondaries [RA, Dec] in decimal degrees
+              coordRange ([float,float,float,float]): minimum RA, maximum RA, minimum Dec,
+                                                      maximum Dec in decimal degrees
 
          Returns:
-              selectedSecondaries ([int,int]): coordinates of secondaries [RA, Dec] in decimal degrees
+              selectedSecondaries ([float,float]): coordinates of secondaries [RA, Dec] in decimal degrees
 
     """
     selectedSecondaries = secondaries[
@@ -64,11 +64,11 @@ def calcDist(starA, stars):
     Calculates the distance between a single object and a list of objects
 
          Parameters:
-              starA (int,int): RA and Dec in decimal degrees
-              stars ([int,int]): array of RA and Dec in decimal degrees
+              starA (float,float): RA and Dec in decimal degrees
+              stars ([float,float]): array of RA and Dec in decimal degrees
 
          Returns:
-              distVals ([int]): distances in decimal degrees
+              distVals ([float]): distances in decimal degrees
     """
     RAarr = np.ones(len(stars)) * starA[0]
     Decarr = np.ones(len(stars)) * starA[1]
@@ -86,15 +86,15 @@ def calcLOS(coordRange, secondaries, nRuns, distLOS):
     Determines the percentage chance that a star is a line-of-sight binary
 
          Parameters:
-              coordRange ([int,int,int,int]): minimum RA, maximum RA, minimum Dec,
-                                              maximum Dec in decimal degrees
-              secondaries ([int,int]): coordinates of secondaries [RA, Dec] in decimal degrees
+              coordRange ([float,float,float,float]): minimum RA, maximum RA, minimum Dec,
+                                                      maximum Dec in decimal degrees
+              secondaries ([float,float]): coordinates of secondaries [RA, Dec] in decimal degrees
               nRuns (int): number of Monte Carlo simulations
-              distLOS (int): separation between two objects (in arcminutes)
+              distLOS (float): separation between two objects (in arcminutes)
                              necessary to be a line-of-sight companion
 
          Returns:
-              losPercent (int): percent of runs that had a line-of-sight companion
+              losPercent (float): percent of runs that had a line-of-sight companion
     """
 
     # counter that increments if there is a line-of-sight binary
@@ -127,14 +127,14 @@ def calcLOSpercent(nRuns, distLOS, distSurvey, unknownBinaries, secondaries):
 
          Parameters:
               nRuns (int): number of Monte Carlo simulations
-              distLOS (int): separation between two objects (in arcminutes)
+              distLOS (float): separation between two objects (in arcminutes)
                              necessary to be a line-of-sight companion
-              distSurvey (int): distance around object for population density in arcminutes
-              unknownBinaries ([int,int]): coordinates of unknown binaries [RA, Dec] in decimal degrees
-              secondaries ([int,int]): coordinates of secondaries [RA, Dec] in decimal degrees
+              distSurvey (float): distance around object for population density in arcminutes
+              unknownBinaries ([float,float]): coordinates of unknown binaries [RA, Dec] in decimal degrees
+              secondaries ([float,float]): coordinates of secondaries [RA, Dec] in decimal degrees
 
          Returns:
-              losResults ([int]): one value for each star
+              losResults ([float]): one value for each star
     """
     # create empty array of percentage of LOS results
     losResults = np.zeros(len(unknownBinaries))
