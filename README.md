@@ -32,13 +32,13 @@ The only values that need to be changed are located in the main method. Here you
 * the list of unknown binaries
 * the list of known secondary stars in the surrounding environment.
 
-Example csv files are provided as well. `M31binaries.csv` is the list of unknown binaries and `M31OBs.csv` is the list of secondary stars.
+Example csv files are provided as well. `M31_binaries.csv` is the list of unknown binaries and `M31_OBs.csv` is the list of secondary stars.
 
-The code can then be run using `python3 lineOfSight.py`
+The code can then be run using `python3 line_of_sight.py`
 
 ### Outputted files
 
-The program outputs `losResults.csv` that shows the percentage of times each object was close enough to a secondary object such that it would be classified as a line-of-sight binary. 
+The program outputs `los_results.csv` that shows the percentage of times each object was close enough to a secondary object such that it would be classified as a line-of-sight binary. 
 
 ## A test case: Red Supergiant + OB binaries
 The example below walks us through the process of applying the Monte Carlo simulation to red supergiant + OB binaries in the Local Group galaxy of M31.
@@ -49,13 +49,13 @@ To select the OB stars from the Local Group Galaxy Survey, we can remove everyth
 
 We'd also like to set a brightness criteria. Based on our observing setup, we won't detect any OB stars fainter than V = 21. Using these cuts, we find `26,762` OB stars in M31.
 
-I've included the M31binaries.csv and M31OBs.csv files that contain the coordinates of the M31 red supergiant + OB binaries and known OB stars in M31, respectively (in decimal degree csv format). Running the lineOfSight.py script with the following inputs outputs the losResults.csv file.
+I've included the `M31_binaries.csv` and `M31_OBs.csv` files that contain the coordinates of the M31 red supergiant + OB binaries and known OB stars in M31, respectively (in decimal degree csv format). Running the `line_of_sight.py` script with the following inputs outputs the `los_results.csv` file.
 
 Inputs:
-* nRuns = 10000
-* distLOS = 0.75 # arcseconds
-* distSurvey = 5 # arcminutes
-* unknownBinaries = `M31binaries.csv`
-* secondaries = `M31OBs.csv`
+* n_runs = 10000
+* dist_LOS = 0.75 # arcseconds
+* dist_survey = 5 # arcminutes
+* unknown_binaries = `M31_binaries.csv`
+* secondaries = `M31_OBs.csv`
 
-The output is then `losResults.csv` which shows the percentage of times each M31 red supergiant + OB binary was close enough to another OB star to be deemed a line-of-sight binary. On this run of the simulation, the highest percentage was 1.2%. So, it is very unlikely that any of these objects are line-of-sight binaries!
+The output is then `los_results.csv` which shows the percentage of times each M31 red supergiant + OB binary was close enough to another OB star to be deemed a line-of-sight binary. On this run of the simulation, the highest percentage was 1.2%. So, it is very unlikely that any of these objects are line-of-sight binaries!
